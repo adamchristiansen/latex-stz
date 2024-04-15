@@ -258,17 +258,20 @@
 % An inline todo note.
 % #1: Name.
 % #2: Text.
-\newcommand*{\@stz@todosurround}[2]{%
+\newcommand*{\@stz@todosurroundfragile}[2]{%
   \@stz@warning{Todo note}%
-  \colorlet{oldcolor}{.}\color{\@stz@valueof{todo/color}}%
-  \@stz@ifempty{#2}%
-    {\sffamily\bfseries\strut((\@stz@valueof{todo/#1/title}))}
-  \else%
-    {\sffamily\bfseries\strut\@stz@valueof{todo/#1/title}((}#2%
-    {\sffamily\bfseries\strut))}
-  \fi
-  \color{oldcolor}%
+  % Start a group to scope the new color.
+  {%
+    \color{\@stz@valueof{todo/color}}%
+    \@stz@ifempty{#2}%
+      {\sffamily\bfseries\strut[\@stz@valueof{todo/#1/title}]}%
+    \else%
+      {\sffamily\bfseries\strut[\@stz@valueof{todo/#1/title}} #2%
+      {\sffamily\bfseries\strut]}%
+    \fi%
+  }
 }
+\DeclareRobustCommand*{\@stz@todosurround}[1]{\@stz@todosurroundfragile{#1}}
 
 % Provide descriptive todo notes.
 \newcommand*{\todoadd}[1]{\@stz@todosurround{add}{#1}}
