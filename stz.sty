@@ -48,11 +48,13 @@
 % Packages used in this package.
 \RequirePackage{fontawesome5}
 \RequirePackage{pgfkeys}
+\RequirePackage{lipsum}
 \RequirePackage{siunitx}
 \RequirePackage{tcolorbox}
+\RequirePackage{tikz}
 \RequirePackage{xcolor}
 \tcbuselibrary{skins}
-% Other packages that I often use.
+% Other packages that are useful to load but are not used in this package.
 \RequirePackage{amsmath}
 
 %==============================================================================
@@ -100,6 +102,7 @@
   todo/color/.initial=purple,
   todo/fix/title/.initial=Fix,
   todo/more/title/.initial=More,
+  todo/placeholder/title/.initial=Placeholder,
   todo/ref/title/.initial=Ref,
   todo/remove/title/.initial=Remove,
   todo/revise/title/.initial=Revise,
@@ -284,6 +287,31 @@
 \newcommand*{\todocite}[1]{\@stz@todosurround{cite}{#1}}
 \newcommand*{\todoref}[1]{\@stz@todosurround{ref}{#1}}
 \newcommand*{\todomore}[1]{\@stz@todosurround{more}{#1}}
+
+% Generate arbitrary placeholder sentences paragraphs.
+% #1: Optional number of sentences/paragraphs.
+\newcommand*{\todosentence}[1][1]{%
+  \@stz@warning{Todo note}%
+  {%
+    \color{\@stz@valueof{todo/color}}%
+    \setlipsum{%
+      sentence-before=\textsf{\textbf{[\@stz@valueof{todo/placeholder/title} }},%
+      sentence-after=\textsf{\textbf{]}},%
+    }%
+    \lipsum[1-150][1-#1]%
+  }%
+}
+\newcommand*{\todopar}[1][1]{%
+  \@stz@warning{Todo note}%
+  {%
+    \color{\@stz@valueof{todo/color}}%
+    \setlipsum{%
+      par-before=\textsf{\textbf{[\@stz@valueof{todo/placeholder/title} }},%
+      par-after=\textsf{\textbf{]}},%
+    }%
+    \lipsum[1-#1]%
+  }%
+}
 
 % Add a placeholder box.
 % #1: Optional /todo/box/ overrides.
