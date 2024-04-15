@@ -93,6 +93,9 @@
   tip/symbol/.initial=\faLightbulb,
   tip/title/.initial=Tip,
   todo/add/title/.initial=Add,
+  todo/box/height/.initial=5cm,
+  todo/box/title/.initial=Placeholder,
+  todo/box/width/.initial=0.8\linewidth,
   todo/cite/title/.initial=Cite,
   todo/color/.initial=purple,
   todo/fix/title/.initial=Fix,
@@ -269,7 +272,7 @@
       {\sffamily\bfseries\strut[\@stz@valueof{todo/#1/title}} #2%
       {\sffamily\bfseries\strut]}%
     \fi%
-  }
+  }%
 }
 \DeclareRobustCommand*{\@stz@todosurround}[1]{\@stz@todosurroundfragile{#1}}
 
@@ -282,15 +285,20 @@
 \newcommand*{\todoref}[1]{\@stz@todosurround{ref}{#1}}
 \newcommand*{\todomore}[1]{\@stz@todosurround{more}{#1}}
 
-% TODO Allow dimensions to be changed
-% Add a placeholder figure.
-\newcommand*{\todofigure}{
+% Add a placeholder box.
+% #1: Optional /todo/box/ overrides.
+\newcommand*{\todobox}[1][]{
   \@stz@warning{Todo note}%
+  \stzsetup{todo/box/.cd,#1}%
   \begin{tikzpicture}
-    \node[
-      minimum width=\linewidth,
-      minimum height=6cm,
-      draw=\@stz@valueof{todo/color},
-    ] {\color{\@stz@valueof{todo/color}}\Large\texttt{Placeholder}};
+    \coordinate (sw) at (0, 0);
+    \coordinate (nw) at (0,\@stz@valueof{todo/box/height});
+    \coordinate (se) at (\@stz@valueof{todo/box/width},0);
+    \coordinate (ne) at (\@stz@valueof{todo/box/width},\@stz@valueof{todo/box/height});
+    \coordinate (c) at (0.5*\@stz@valueof{todo/box/width},0.5*\@stz@valueof{todo/box/height});
+    \draw[color=\@stz@valueof{todo/color}] (sw) rectangle (ne);
+    \draw[color=\@stz@valueof{todo/color}] (sw) -- (ne) (nw) -- (se);
+    \node[align=center,fill=white] at (c)
+      {\color{\@stz@valueof{todo/color}}\sffamily\Large\@stz@valueof{todo/box/title}};
   \end{tikzpicture}
 }
