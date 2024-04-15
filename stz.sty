@@ -1,0 +1,280 @@
+% Copyright 2024 Adam Christiansen
+% SPDX-License-Identifier: LPPL-1.3c
+%
+% This file may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this license or
+% (at your option) any later version. The latest version of this license is in
+% the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+% This file (The Work in the LPPL) can be distributed on its own.
+%
+% This file can be found at
+%
+%    https://github.com/adamchristiansen/latex-stz
+%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stz}[2024/04/15 stz package]
+
+% Name of the package.
+\newcommand*{\@stz@packagename}{stz}
+
+% Package error, warning, and info reporting macros.
+\newcommand*{\@stz@error}[2]{%
+  \PackageError{\@stz@packagename}{#1}{#2}%
+}
+\newcommand*{\@stz@warning}[1]{%
+  \PackageWarning{\@stz@packagename}{#1}%
+}
+\newcommand*{\@stz@warningnoline}[1]{%
+  \PackageWarningNoLine{\@stz@packagename}{#1}%
+}
+\newcommand*{\@stz@info}[1]{%
+  \PackageInfo{\@stz@packagename}{#1}%
+}
+
+% Currently no options are accepted.
+\DeclareOption*{%
+  \@stz@warningnoline{Unknown option '\CurrentOption'}%
+}
+\ProcessOptions\relax
+
+%==============================================================================
+% Packages
+%==============================================================================
+
+% Packages used in this package.
+\RequirePackage{fontawesome5}
+\RequirePackage{pgfkeys}
+\RequirePackage{siunitx}
+\RequirePackage{tcolorbox}
+\RequirePackage{xcolor}
+\tcbuselibrary{skins}
+% Other packages that I often use.
+\RequirePackage{amsmath}
+
+%==============================================================================
+% Private Utilities
+%==============================================================================
+
+% Check if something is empty.
+% Example usage:
+%   \@stz@ifempty#1...\else...\fi
+%   \@stz@ifempty\testvalue...\else...\fi
+\def\@stz@ifempty#1{\ifx\empty#1\empty}
+
+%==============================================================================
+% Key-Value System
+%==============================================================================
+
+% Change global configuration values.
+\newcommand*{\stzsetup}[1]{\pgfkeys{/\@stz@packagename/.cd,#1}}
+
+% Get a configuration value by key.
+\newcommand*{\@stz@valueof}[1]{\pgfkeysvalueof{/\@stz@packagename/#1}}
+
+% Set the initial configuration values.
+\stzsetup{
+  caution/color/.initial=orange,
+  caution/symbol/.initial=\faExclamationTriangle,
+  caution/title/.initial=Caution,
+  danger/color/.initial=red,
+  danger/symbol/.initial=\faFire*,
+  danger/title/.initial=Danger,
+  important/color/.initial=teal,
+  important/symbol/.initial=\faExclamationCircle,
+  important/title/.initial=Important,
+  note/color/.initial=blue,
+  note/symbol/.initial=\faInfoCircle,
+  note/title/.initial=Note,
+  tip/color/.initial=green,
+  tip/symbol/.initial=\faLightbulb,
+  tip/title/.initial=Tip,
+  todo/add/title/.initial=Add,
+  todo/cite/title/.initial=Cite,
+  todo/color/.initial=purple,
+  todo/fix/title/.initial=Fix,
+  todo/more/title/.initial=More,
+  todo/ref/title/.initial=Ref,
+  todo/remove/title/.initial=Remove,
+  todo/revise/title/.initial=Revise,
+  todo/symbol/.initial=\faWrench,
+  todo/title/.initial=Todo,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  _______                 _
+%%% |__   __|               | |
+%%%    | |_      _____  __ _| | _____
+%%%    | \ \ /\ / / _ \/ _` | |/ / __|
+%%%    | |\ V  V /  __/ (_| |   <\__ \
+%%%    |_| \_/\_/ \___|\__,_|_|\_\___/
+%%%
+%%% Tweaks are adjustments to LaTeX itself or external packages.
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%==============================================================================
+% Floats
+%==============================================================================
+
+% Set default float positions for figures and tables.
+\@namedef{fps@figure}{t!}
+\@namedef{fps@table}{t!}
+
+% Add \centering to figures and tables.
+\g@addto@macro\@floatboxreset\centering
+
+%==============================================================================
+% Color
+%==============================================================================
+
+% The following colors are always provided by xcolor, however, they are
+% redefined to give nicer defaults.
+\definecolor{black}{RGB}{0, 0, 0}
+\definecolor{darkgray}{RGB}{63, 63, 63}
+\definecolor{gray}{RGB}{127, 127, 127}
+\definecolor{lightgray}{RGB}{191, 191, 191}
+\definecolor{white}{RGB}{255, 255, 255}
+\definecolor{red}{RGB}{197, 27, 70}
+\definecolor{orange}{RGB}{248, 136, 18}
+\definecolor{yellow}{RGB}{240, 200, 8}
+\definecolor{lime}{RGB}{156, 207, 79}
+\definecolor{green}{RGB}{33, 155, 95}
+\definecolor{teal}{RGB}{0, 128, 136}
+\definecolor{cyan}{RGB}{41, 187, 255}
+\definecolor{blue}{RGB}{0, 102, 204}
+\definecolor{violet}{RGB}{73, 36, 147}
+\definecolor{purple}{RGB}{126, 82, 160}
+\definecolor{magenta}{RGB}{229, 16, 76}
+\definecolor{pink}{RGB}{231, 136, 171}
+\definecolor{brown}{RGB}{168, 118, 77}
+\definecolor{olive}{RGB}{164, 182, 104}
+
+%==============================================================================
+% Units
+%==============================================================================
+
+% siunitx defaults.
+\sisetup{
+  list-final-separator=\text{, and },
+  list-units=single,
+  mode=math, % Allows macros such as \sim.
+  product-units=single,
+  range-units=single,
+  per-mode=single-symbol, % Use / for 1 denominator, power for 2 or more.
+}
+
+% Custom units.
+\DeclareSIUnit{\arb}{arb.}
+\DeclareSIUnit{\decade}{decade}
+\DeclareSIUnit{\g}{\ensuremath{\mathit{g}}}
+\DeclareSIUnit{\mrad}{\milli\radian}
+\DeclareSIUnit{\octave}{octave}
+\DeclareSIUnit{\ppb}{ppb}
+\DeclareSIUnit{\ppm}{ppm}
+\DeclareSIUnit{\ppt}{ppt}
+\DeclareSIUnit{\strain}{strain}
+
+% Qualifiers for units (e.g., \volt\rms).
+\DeclareSIQualifier{\rms}{rms}
+\DeclareSIQualifier{\pp}{pp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  ______ _                           _
+%%% |  ____| |                         | |
+%%% | |__  | | ___ _ __ ___   ___ _ __ | |_ ___
+%%% |  __| | |/ _ \ '_ ` _ \ / _ \ '_ \| __/ __|
+%%% | |____| |  __/ | | | | |  __/ | | | |_\__ \
+%%% |______|_|\___|_| |_| |_|\___|_| |_|\__|___/
+%%%
+%%% Elements are new features.
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%==============================================================================
+% Admonitions
+%==============================================================================
+
+% A tcolorbox style for admonitions.
+% #1: Title.
+% #2: Symbol.
+% #3: Color.
+\tcbset{admonition/.style n args={3}{
+  % Spacing.
+  toptitle=\baselineskip,
+  bottomtitle=0.5\baselineskip,
+  top=0.5\baselineskip,
+  bottom=\baselineskip,
+  left=1.5\baselineskip,
+  right=1.5\baselineskip,
+  boxsep=0pt,
+  % Frame.
+  enhanced,
+  borderline west={0.5\baselineskip}{0pt}{#3},
+  sharp corners,
+  % Color.
+  colframe=#3!5!white,
+  colback=#3!5!white,
+  colbacktitle=#3!5!white,
+  coltext=black,
+  coltitle=#3,
+  % Title.
+  fonttitle=\sffamily\bfseries\strut,
+  title={\@stz@ifempty#2#1\else#2 #1\fi},
+}}
+
+% Define a new admonition.
+% #1: Optional code to run.
+% #2: Name.
+\newcommand*{\@stz@newadmonition}[2][]{
+  \newtcolorbox{#2}[1][]{
+    code={\stzsetup{#2/.cd,##1}},
+    admonition=
+      {\@stz@valueof{#2/title}}
+      {\@stz@valueof{#2/symbol}}
+      {\@stz@valueof{#2/color}},
+    code={#1},
+  }
+}
+
+% The note, tip, important, caution, and danger environments are predefined
+% admonitions.
+\@stz@newadmonition{note}
+\@stz@newadmonition{tip}
+\@stz@newadmonition{important}
+\@stz@newadmonition{caution}
+\@stz@newadmonition{danger}
+
+%==============================================================================
+% Todo
+%==============================================================================
+
+% A standalone todo note.
+\@stz@newadmonition[\@stz@warning{Todo note}]{todo}
+
+% An inline todo note.
+% #1: Name.
+% #2: Text.
+\newcommand*{\@stz@todosurround}[2]{%
+  \@stz@warning{Todo note}%
+  \colorlet{oldcolor}{.}\color{\@stz@valueof{todo/color}}%
+  \@stz@ifempty{#2}%
+    {\sffamily\bfseries\strut((\@stz@valueof{todo/#1/title}))}
+  \else%
+    {\sffamily\bfseries\strut\@stz@valueof{todo/#1/title}((}#2%
+    {\sffamily\bfseries\strut))}
+  \fi
+  \color{oldcolor}%
+}
+
+% Provide descriptive todo notes.
+\newcommand*{\todoadd}[1]{\@stz@todosurround{add}{#1}}
+\newcommand*{\todoremove}[1]{\@stz@todosurround{remove}{#1}}
+\newcommand*{\todofix}[1]{\@stz@todosurround{fix}{#1}}
+\newcommand*{\todorevise}[1]{\@stz@todosurround{revise}{#1}}
+\newcommand*{\todocite}[1]{\@stz@todosurround{cite}{#1}}
+\newcommand*{\todoref}[1]{\@stz@todosurround{ref}{#1}}
+\newcommand*{\todomore}[1]{\@stz@todosurround{more}{#1}}
