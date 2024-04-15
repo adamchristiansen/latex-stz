@@ -281,3 +281,16 @@
 \newcommand*{\todocite}[1]{\@stz@todosurround{cite}{#1}}
 \newcommand*{\todoref}[1]{\@stz@todosurround{ref}{#1}}
 \newcommand*{\todomore}[1]{\@stz@todosurround{more}{#1}}
+
+% TODO Allow dimensions to be changed
+% Add a placeholder figure.
+\newcommand*{\todofigure}{
+  \@stz@warning{Todo note}%
+  \begin{tikzpicture}
+    \node[
+      minimum width=\linewidth,
+      minimum height=6cm,
+      draw=\@stz@valueof{todo/color},
+    ] {\color{\@stz@valueof{todo/color}}\Large\texttt{Placeholder}};
+  \end{tikzpicture}
+}
