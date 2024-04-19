@@ -1,23 +1,6 @@
-% Copyright 2024 Adam Christiansen
-% SPDX-License-Identifier: LPPL-1.3c
-%
-% This file may be distributed and/or modified under the conditions of the
-% LaTeX Project Public License (LPPL), either version 1.3c of this license or
-% (at your option) any later version. The latest version of this license is in
-% the file
-%
-%    https://www.latex-project.org/lppl.txt
-%
-% This file (The Work in the LPPL) can be distributed on its own.
-%
-% This file can be found at
-%
-%    https://github.com/adamchristiansen/latex-stz
-%
-
 \documentclass[10pt,titlepage]{article}
 
-\usepackage{tabularx}
+\usepackage{mwe}
 \usepackage[hidelinks]{hyperref}
 
 \usepackage{stz}
@@ -329,5 +312,32 @@ More \todomore{text} required.
 \let\@stz@warning\old@stz@warning
 \let\old@stz@warning\undefined
 \makeatother
+
+%==============================================================================
+% Annotations
+%==============================================================================
+
+\subsection{Annotations}
+
+Annotations are used to draw on top of graphics.
+
+\begin{example}
+\begin{annotatedgraphic}%
+    [width=0.8\linewidth]%
+    {example-image}
+  \node at (0.4, 0.7) {$\pi$};
+\end{annotatedgraphic}
+\end{example}
+
+A help grid can be added to assist in label positioning.
+
+\begin{example}
+\begin{annotatedgraphic}%
+    [width=0.8\linewidth]%
+    {example-image}
+  \annotationhelplines
+  \node at (0.4, 0.7) {$\pi$};
+\end{annotatedgraphic}
+\end{example}
 
 \end{document}
