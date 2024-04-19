@@ -48,16 +48,22 @@
 % Packages used in this package.
 \RequirePackage{fontawesome5}
 \RequirePackage{pgfkeys}
+\RequirePackage{pgfplots}
 \RequirePackage{lipsum}
 \RequirePackage{siunitx}
 \RequirePackage{tcolorbox}
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
-\tcbuselibrary{skins}
 % Other packages that are useful to load but are not used in this package.
 \RequirePackage{amsfonts}
 \RequirePackage{amsmath}
 
+% Libraries to load for packages.
+\usepgfplotslibrary{groupplots}
+\tcbuselibrary{skins}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usetikzlibrary{plotmarks}
 
 %==============================================================================
 % Private Utilities
@@ -136,7 +142,7 @@
 \g@addto@macro\@floatboxreset\centering
 
 %==============================================================================
-% Color
+% xcolor
 %==============================================================================
 
 % The following colors are always provided by xcolor, however, they are
@@ -162,7 +168,7 @@
 \definecolor{olive}{RGB}{164, 182, 104}
 
 %==============================================================================
-% Units
+% siunitx
 %==============================================================================
 
 % siunitx defaults.
@@ -189,6 +195,109 @@
 % Qualifiers for units (e.g., \volt\rms).
 \DeclareSIQualifier{\rms}{rms}
 \DeclareSIQualifier{\pp}{pp}
+
+%==============================================================================
+% TikZ and PGF
+%==============================================================================
+
+% Plot color names.
+\colorlet{color0}{blue}
+\colorlet{color1}{orange}
+\colorlet{color2}{green}
+\colorlet{color3}{red}
+\colorlet{color4}{purple}
+\colorlet{color5}{pink}
+\colorlet{color6}{gray}
+\colorlet{color7}{brown}
+\colorlet{color8}{yellow}
+\colorlet{color9}{cyan}
+
+% Plot line names.
+\tikzset{
+  line0/.style=solid,
+  line1/.style=dashed,
+  line2/.style=dotted,
+  line3/.style=dashdotted,
+  line4/.style=dashdotdotted,
+  line5/.style=densely dashed,
+  line6/.style=densely dotted,
+  line7/.style=loosely dashed,
+  line8/.style=loosely dotted,
+  line9/.style=loosely dashdotted,
+}
+
+% Plot mark names.
+\pgfdeclareplotmark{mark0}{\pgfuseplotmark{o}}
+\pgfdeclareplotmark{mark1}{\pgfuseplotmark{square}}
+\pgfdeclareplotmark{mark2}{\pgfuseplotmark{triangle}}
+\pgfdeclareplotmark{mark3}{\pgfuseplotmark{diamond}}
+\pgfdeclareplotmark{mark4}{\pgfuseplotmark{pentagon}}
+\pgfdeclareplotmark{mark5}{\pgfuseplotmark{Mercedes star}}
+\pgfdeclareplotmark{mark6}{\pgfuseplotmark{x}}
+\pgfdeclareplotmark{mark7}{\pgfuseplotmark{star}}
+\pgfdeclareplotmark{mark8}{\pgfuseplotmark{asterisk}}
+\pgfdeclareplotmark{mark9}{\pgfuseplotmark{+}}
+
+% Default color cycle.
+\pgfplotscreateplotcyclelist{stzcolors}{%
+  color0, line0, mark=mark0, every mark/.append style={solid,fill=none}\\%
+  color1, line1, mark=mark1, every mark/.append style={solid,fill=none}\\%
+  color2, line2, mark=mark2, every mark/.append style={solid,fill=none}\\%
+  color3, line3, mark=mark3, every mark/.append style={solid,fill=none}\\%
+  color4, line4, mark=mark4, every mark/.append style={solid,fill=none}\\%
+  color5, line5, mark=mark5, every mark/.append style={solid,fill=none}\\%
+  color6, line6, mark=mark6, every mark/.append style={solid,fill=none}\\%
+  color7, line7, mark=mark7, every mark/.append style={solid,fill=none}\\%
+  color8, line8, mark=mark8, every mark/.append style={solid,fill=none}\\%
+  color9, line9, mark=mark9, every mark/.append style={solid,fill=none}\\%
+}
+
+\tikzset{
+  % Arrows.
+  >={Latex[width=2mm,length=3mm]},
+  % Font and text.
+  every node/.style={align=center},
+  font=\small,
+}
+
+\pgfplotsset{
+  compat=1.18,
+  % Dimensions.
+  width=\linewidth,
+  height=0.6\linewidth,
+  % Axis style.
+  every axis/.append style={
+    cycle list name=stzcolors,
+    legend style={
+      font=\footnotesize,
+    },
+    legend pos=north east,
+    unbounded coords=jump,
+  },
+  every axis plot/.append style={
+    line cap=round,
+    smooth,
+    thick,
+  },
+  grid=major,
+  % Group style.
+  group/horizontal sep=22mm,
+  group/vertical sep=15mm,
+}
+
+% Number formatting.
+\pgfkeys{
+  /pgf/number format/.cd,
+  fixed,
+  precision=999,
+  set thousands separator={\,},
+  1000 sep in fractionals,
+}
+
+% Background and foreground layers to draw behind and on top of the main layer.
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  ______ _                           _

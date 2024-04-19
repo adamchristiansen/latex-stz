@@ -15,7 +15,7 @@
 %    https://github.com/adamchristiansen/latex-stz
 %
 
-\documentclass[11pt,titlepage]{article}
+\documentclass[10pt,titlepage]{article}
 
 \usepackage{tabularx}
 \usepackage[hidelinks]{hyperref}
@@ -73,7 +73,9 @@ over and over again every time I create a new document.
 This package is my consolidated set of utilities
 and opinionated set of styles and tweaks.
 This document serves as a limited showcase
-and set of quick visual test cases for the \code{stz} package.
+and set of quick visual test cases for the \code{stz} package;
+This document does not give examples of every feature,
+and \code{stz.sty} should be read for the full list of features.
 
 \begin{caution}
   This package is not stable and can change at any time.
@@ -103,10 +105,10 @@ The \code{table} and \code{figure} environments are adjusted to use
 \code{t!} positioning and \code{\string\centering} by default.
 
 %==============================================================================
-% Color
+% xcolor
 %==============================================================================
 
-\subsection{Color}
+\subsection{\packagename{xcolor}}
 
 The 19 standard colors provided by \packagename{xcolor} are redefined and are
 the only colors used throughout this package.
@@ -129,10 +131,10 @@ the only colors used throughout this package.
 \end{tabularx}
 
 %==============================================================================
-% Units
+% siunitx
 %==============================================================================
 
-\subsection{Units}
+\subsection{\packagename{siunitx}}
 
 These are tweaks to the \packagename{siunitx} package.
 
@@ -161,6 +163,36 @@ These are tweaks to the \packagename{siunitx} package.
 % Several qualifiers are provided.
 \qty{1}{\volt\rms}
 \end{example}
+
+%==============================================================================
+% TikZ and PGF
+%==============================================================================
+
+\subsection{Ti\textit{k}Z and PGF}
+
+Several defaults are changed for \packagename{tikz} and \packagename{pgf}.
+The most apparent are plots.
+
+{
+\pgfplotsset{height=1.25\linewidth}
+\begin{example}
+\pgfplotsset{domain=0:1,samples=6}
+\begin{tikzpicture}
+  \begin{axis}
+    \addplot+ { 1*x^2+0};
+    \addplot+ { 2*x^2+1};
+    \addplot+ { 3*x^2+2};
+    \addplot+ { 4*x^2+3};
+    \addplot+ { 5*x^2+4};
+    \addplot+ { 6*x^2+5};
+    \addplot+ { 7*x^2+6};
+    \addplot+ { 8*x^2+7};
+    \addplot+ { 9*x^2+8};
+    \addplot+ {10*x^2+9};
+  \end{axis}
+\end{tikzpicture}
+\end{example}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  ______ _                           _
