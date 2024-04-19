@@ -47,6 +47,7 @@
 
 % Packages used in this package.
 \RequirePackage{fontawesome5}
+\RequirePackage{graphicx}
 \RequirePackage{pgfkeys}
 \RequirePackage{pgfplots}
 \RequirePackage{lipsum}
@@ -57,6 +58,7 @@
 % Other packages that are useful to load but are not used in this package.
 \RequirePackage{amsfonts}
 \RequirePackage{amsmath}
+\RequirePackage{tabularx}
 
 % Libraries to load for packages.
 \usepgfplotslibrary{groupplots}
@@ -440,4 +442,49 @@
     \node[align=center,fill=white] at (c)
       {\color{\@stz@valueof{todo/color}}\sffamily\Large\@stz@valueof{todo/box/title}};
   \end{tikzpicture}
+}
+
+%==============================================================================
+% Annotations
+%==============================================================================
+
+% Loads a graphic by passing arguments to \includegraphics and then enables
+% drawing over top. The lower left corner of the graphic is (0, 0) and the
+% upper right corner is (1, 1).
+\newenvironment{annotatedgraphic}[2][]{%
+  \begin{tikzpicture}[trim left]
+    \node[anchor=south west,inner sep=0] (image) at (0,0)
+      {\includegraphics[#1]{#2}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+      \tikzset{
+        every node/.append style={
+          black,
+          draw=black,
+          fill=white,
+          font=\footnotesize,
+        }
+      }
+}{%
+    \end{scope}
+  \end{tikzpicture}
+}
+
+% Show a help grid in an annotatedgraphic environment.
+\newcommand*{\annotationhelplines}{%
+  \draw[help lines,gray,xstep=0.1,ystep=0.1] (0,0) grid (1,1);
+  % Use a group to scope the styling of the reference text.
+  {
+    \tikzset{
+      every node/.append style={
+        red,
+        draw=none,
+        fill=none,
+        font=\tiny,
+      }
+    }
+    \foreach \x in {1,2,...,9} {
+      \node [anchor=north]  at (\x/10, 0) {0.\x};
+      \node [anchor=east] at (0, \x/10) {0.\x};
+    }
+  }
 }
