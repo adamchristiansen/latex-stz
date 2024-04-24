@@ -473,6 +473,7 @@
 
 % Show a help grid in an annotatedgraphic environment.
 \newcommand*{\annotationhelplines}{%
+  \@stz@warning{Annotation help lines}%
   \draw[help lines,gray,xstep=0.1,ystep=0.1] (0,0) grid (1,1);
   % Use a group to scope the styling of the reference text.
   {
