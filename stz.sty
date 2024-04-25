@@ -16,7 +16,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{stz}[2024/04/19 stz package]
+\ProvidesPackage{stz}[2024/04/25 stz package]
 
 % Name of the package.
 \newcommand*{\@stz@packagename}{stz}
@@ -48,9 +48,9 @@
 % Packages used in this package.
 \RequirePackage{fontawesome5}
 \RequirePackage{graphicx}
+\RequirePackage{lipsum}
 \RequirePackage{pgfkeys}
 \RequirePackage{pgfplots}
-\RequirePackage{lipsum}
 \RequirePackage{siunitx}
 \RequirePackage{tcolorbox}
 \RequirePackage{tikz}
@@ -63,8 +63,8 @@
 \RequirePackage{tabularx}
 
 % Libraries to load for packages.
-\usepgfplotslibrary{groupplots}
 \tcbuselibrary{skins}
+\usepgfplotslibrary{groupplots}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{plotmarks}
