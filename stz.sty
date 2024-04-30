@@ -203,6 +203,21 @@
 \DeclareSIQualifier{\pp}{pp}
 
 %==============================================================================
+% tabularx
+%==============================================================================
+
+% Create new column types that behave like the X from tabular X but a left,
+% center, and right aligned.
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+% Used in the column specifier preamble to create a column with the specified
+% relative width weight. The sum of all weights must equal the number of
+% columns. This may conflict with cells spanning multiple columns.
+\newcommand*{\colww}[1]{\hsize=#1\hsize\linewidth=\hsize}
+
+%==============================================================================
 % TikZ and PGF
 %==============================================================================
 
