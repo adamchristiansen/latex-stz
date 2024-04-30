@@ -148,6 +148,45 @@ These are tweaks to the \packagename{siunitx} package.
 \end{example}
 
 %==============================================================================
+% tabularx
+%==============================================================================
+
+\subsection{\packagename{tabularx}}
+
+These are tweaks to the \packagename{tabularx} package.
+The main changes are the addition of \code{L}, \code{C}, and \code{R} column types
+which correspond to the \packagename{tabularx} \code{X} column
+but with explicit left, centre, and right alignment.
+
+\begin{example}
+% Column alignment.
+\begin{tabularx}{\linewidth}{|L|C|R|}
+  \toprule
+  a & b & c \\
+  \midrule
+  d & e & f \\
+  g & h & i \\
+  \bottomrule
+\end{tabularx}
+\end{example}
+
+The column width can be adjusted by changing the column width weight.
+It is important that the weights sum up to the number of columns.
+This can also change the behviour of cells spanning multiple columns.
+
+\begin{example}
+% Column size.
+\begin{tabularx}{\linewidth}{ |>{\colww{0.5}}L |>{\colww{1.5}}C|R|}
+  \toprule
+  0.5 & 1.5 & 1.0 \\
+  \midrule
+  d & e & f \\
+  g & h & i \\
+  \bottomrule
+\end{tabularx}
+\end{example}
+
+%==============================================================================
 % TikZ and PGF
 %==============================================================================
 
