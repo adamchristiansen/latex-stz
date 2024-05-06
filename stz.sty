@@ -55,6 +55,7 @@
 \RequirePackage{tcolorbox}
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
+\RequirePackage{xifthen}
 % Other packages that are useful to load but are not used in this package.
 \RequirePackage{amsfonts}
 \RequirePackage{amsmath}
@@ -70,16 +71,6 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{plotmarks}
-
-%==============================================================================
-% Private Utilities
-%==============================================================================
-
-% Check if something is empty.
-% Example usage:
-%   \@stz@ifempty#1...\else...\fi
-%   \@stz@ifempty\testvalue...\else...\fi
-\def\@stz@ifempty#1{\ifx\empty#1\empty}
 
 %==============================================================================
 % Key-Value System
@@ -361,7 +352,7 @@
   coltitle=#3,
   % Title.
   fonttitle=\sffamily\bfseries\strut,
-  title={\@stz@ifempty#2#1\else#2 #1\fi},
+  title={\ifthenelse{\isempty{#2}}{#1}{#2 #1}},
 }}
 
 % Define a new admonition.
@@ -401,12 +392,12 @@
   % Start a group to scope the new color.
   {%
     \color{\@stz@valueof{todo/color}}%
-    \@stz@ifempty{#2}%
+    \ifthenelse{\isempty{#2}}%
       {\sffamily\bfseries\strut[\@stz@valueof{todo/#1/title}]}%
-    \else%
-      {\sffamily\bfseries\strut[\@stz@valueof{todo/#1/title}} #2%
-      {\sffamily\bfseries\strut]}%
-    \fi%
+      {%
+        {\sffamily\bfseries\strut[\@stz@valueof{todo/#1/title}} #2%
+        {\sffamily\bfseries\strut]}%
+      }%
   }%
 }
 \DeclareRobustCommand*{\@stz@todosurround}[1]{\@stz@todosurroundfragile{#1}}
