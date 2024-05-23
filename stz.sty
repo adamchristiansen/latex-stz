@@ -16,7 +16,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{stz}[2024/04/30 stz package]
+\ProvidesPackage{stz}[2024/05/23 stz package]
 
 % Name of the package.
 \newcommand*{\@stz@packagename}{stz}
@@ -70,6 +70,7 @@
 \usepgfplotslibrary{groupplots}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
+\usetikzlibrary{external}
 \usetikzlibrary{plotmarks}
 
 %==============================================================================
@@ -361,6 +362,10 @@
 \newcommand*{\@stz@newadmonition}[2][]{
   \newtcolorbox{#2}[1][]{
     code={\stzsetup{#2/.cd,##1}},
+    % By default tcolorbox does not play nicely with externalization. Since
+    % admonitions are generally very small, externalizing them is not
+    % important and is disabled.
+    code={\tikzset{external/export next=false}},
     admonition=
       {\@stz@valueof{#2/title}}
       {\@stz@valueof{#2/symbol}}
