@@ -16,7 +16,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{stz}[2024/06/07 stz package]
+\ProvidesPackage{stz}[2024/06/10 stz package]
 
 % Name of the package.
 \newcommand*{\@stz@packagename}{stz}
@@ -46,6 +46,7 @@
 %==============================================================================
 
 % Packages used in this package.
+\RequirePackage{caption}
 \RequirePackage{fontawesome5}
 \RequirePackage{graphicx}
 \RequirePackage{lipsum}
@@ -127,6 +128,18 @@
 %%% Tweaks are adjustments to LaTeX itself or external packages.
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%==============================================================================
+% Captions
+%==============================================================================
+
+\captionsetup{
+  % Font.
+  font=small,
+  labelfont=small,
+  textfont=small,
+}
 
 %==============================================================================
 % Floats
