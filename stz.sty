@@ -16,7 +16,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{stz}[2024/06/10 stz package]
+\ProvidesPackage{stz}[2024/06/18 stz package]
 
 % Name of the package.
 \newcommand*{\@stz@packagename}{stz}
@@ -397,24 +397,21 @@
 
 % An inline admonition
 % #1: Name.
-% #2: Text.
-\newcommand*{\@stz@inlineadmonitionfragile}[2]{%
-  \@stz@warning{Todo note}%
+\newcommand*{\@stz@inlineadmonitionfragile}[1]{%
   % Start a group to scope the new color.
   {%
     \color{\@stz@valueof{#1/color}}%
     {\sffamily\bfseries\strut\@stz@valueof{#1/symbol} \@stz@valueof{#1/title}}%
-    \ifthenelse{\isempty{#2}}{}{ #2}%
   }%
 }
 \DeclareRobustCommand*{\@stz@inlineadmonition}[1]{\@stz@inlineadmonitionfragile{#1}}
 
 % Provide inline admonitions.
-\newcommand*{\tipinline}[1]{\@stz@inlineadmonition{tip}{#1}}
-\newcommand*{\noteinline}[1]{\@stz@inlineadmonition{note}{#1}}
-\newcommand*{\importantinline}[1]{\@stz@inlineadmonition{important}{#1}}
-\newcommand*{\cautioninline}[1]{\@stz@inlineadmonition{caution}{#1}}
-\newcommand*{\dangerinline}[1]{\@stz@inlineadmonition{danger}{#1}}
+\newcommand*{\tipinline}{\@stz@inlineadmonition{tip}}
+\newcommand*{\noteinline}{\@stz@inlineadmonition{note}}
+\newcommand*{\importantinline}{\@stz@inlineadmonition{important}}
+\newcommand*{\cautioninline}{\@stz@inlineadmonition{caution}}
+\newcommand*{\dangerinline}{\@stz@inlineadmonition{danger}}
 
 %==============================================================================
 % Todo
